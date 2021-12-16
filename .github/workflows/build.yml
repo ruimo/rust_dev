@@ -1,0 +1,12 @@
+jobs:
+  base-image-build:
+    name: Rust dev image build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Build"
+        uses: actions/checkout@v2
+      - name: "base image build"
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          docker build ./base_image --tag ghcr.io/ruimo-rust-dev:latest
+          docker push ghcr.io/ruimo-rust-dev:latest
